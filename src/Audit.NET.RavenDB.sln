@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audit.NET.RavenDB", "Audit.NET.RavenDB\Audit.NET.RavenDB.csproj", "{A610D988-D911-44F8-9246-73192A619F52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items", ".Solution Items", "{D1EB5D06-7602-4C63-B26F-0C8BD2920DFC}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+		..\.gitignore = ..\.gitignore
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		..\GitVersion.yml = ..\GitVersion.yml
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A610D988-D911-44F8-9246-73192A619F52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A610D988-D911-44F8-9246-73192A619F52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A610D988-D911-44F8-9246-73192A619F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A610D988-D911-44F8-9246-73192A619F52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {683B5AA2-94B9-4135-8C19-695240C3FAAC}
+	EndGlobalSection
+EndGlobal
