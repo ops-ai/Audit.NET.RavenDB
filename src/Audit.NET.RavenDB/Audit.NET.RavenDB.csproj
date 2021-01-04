@@ -16,8 +16,4 @@
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath="LICENSE" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ConfigurationApi\" />
-  </ItemGroup>
 </Project>
