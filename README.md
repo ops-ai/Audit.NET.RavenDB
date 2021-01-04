@@ -6,6 +6,8 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ops-ai_audit-net-ravendb&metric=coverage)](https://sonarcloud.io/dashboard?id=ops-ai_audit-net-ravendb)
 ![CodeQL](https://github.com/ops-ai/Audit.NET.RavenDB/workflows/CodeQL/badge.svg)
 
+[![NuGet Status](https://img.shields.io/nuget/v/Audit.NET.RavenDB.svg?style=flat)](https://www.nuget.org/packages/Audit.NET.RavenDB/)
+[![NuGet Count](https://img.shields.io/nuget/dt/Audit.NET.RavenDB.svg)](https://www.nuget.org/packages/Audit.NET.RavenDB/)
 
 ## Overview
 
