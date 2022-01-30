@@ -13,8 +13,6 @@ namespace Audit.NET.RavenDB
     {
         private readonly IDocumentStore _store;
 
-
-
         /// <summary>
         /// Gets or sets the RavenDB Database name.
         /// </summary>
@@ -36,12 +34,6 @@ namespace Audit.NET.RavenDB
         public RavenDbDataProvider()
         {
 
-        }
-
-        public RavenDbDataProvider(IDocumentStore store, string database = null)
-        {
-            _store = store;
-            Database = database;
         }
 
         public RavenDbDataProvider(Action<IRavenDbProviderConfigurator> config)
