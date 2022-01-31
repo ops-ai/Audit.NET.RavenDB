@@ -1,8 +1,10 @@
 ﻿using Audit.Core;
 using Audit.NET.RavenDB.ConfigurationApi;
+using Audit.NET.RavenDB.Providers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Raven.Client.Documents;
+using Raven.Client.Json.Serialization.NewtonsoftJson;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -44,8 +46,12 @@ namespace Audit.NET.RavenDB
                 config.Invoke(ravenDbConfig);
                 Database = ravenDbConfig._database;
                 JsonSerializerSettings = ravenDbConfig._jsonSerializerSettings;
-
+                
                 _store = new DocumentStore { Urls = ravenDbConfig._urls, Certificate = ravenDbConfig._certificate, Database = ravenDbConfig._database };
+                _store.Conventions.Serialization = new NewtonsoftJsonSerializationConventions
+                {
+                    JsonContractResolver = new AuditContractResolver()
+                };
                 _store.Initialize();
             }
         }

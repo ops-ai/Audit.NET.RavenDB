@@ -1,9 +1,6 @@
-﻿using Audit.Core;
-using Audit.Core.ConfigurationApi;
+﻿using Audit.Core.ConfigurationApi;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
-using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Audit.NET.RavenDB.ConfigurationApi
@@ -21,14 +18,13 @@ namespace Audit.NET.RavenDB.ConfigurationApi
         /// <param name="serializeAsBson">Specifies whether the target object and extra fields should be serialized as Bson. Default is Json.</param>
         public static ICreationPolicyConfigurator UseRavenDB(this IConfigurator configurator, string[] urls, X509Certificate2 certificate, string database = "Audit", JsonSerializerSettings jsonSerializerSettings = null)
         {
-            Configuration.DataProvider = new RavenDbDataProvider(config => config.Certificate(certificate).Urls(urls).Database(database)
-                .CustomSerializerSettings(jsonSerializerSettings ?? new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    Converters = new List<JsonConverter>() { new JavaScriptDateTimeConverter() }
-                }));
+            var ravendbDataProvider = new RavenDbDataProvider(config => {
+                config.Certificate(certificate).Urls(urls).Database(database);
+                if (jsonSerializerSettings != null)
+                    config.CustomSerializerSettings(jsonSerializerSettings);
+            });
 
-            return new CreationPolicyConfigurator();
+            return configurator.UseCustomProvider(ravendbDataProvider);
         }
 
         /// <summary>
