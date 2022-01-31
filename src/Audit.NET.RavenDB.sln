@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audit.NET.RavenDB", "Audit.NET.RavenDB\Audit.NET.RavenDB.csproj", "{A610D988-D911-44F8-9246-73192A619F52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Audit.NET.RavenDB", "Audit.NET.RavenDB\Audit.NET.RavenDB.csproj", "{A610D988-D911-44F8-9246-73192A619F52}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items", ".Solution Items", "{D1EB5D06-7602-4C63-B26F-0C8BD2920DFC}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,7 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items", ".Solutio
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audit.NET.RavenDB.Tests", "Tests\Audit.NET.RavenDB.Tests\Audit.NET.RavenDB.Tests.csproj", "{E44C059B-81A0-4785-BA6E-3F04A816394F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Audit.NET.RavenDB.Tests", "Tests\Audit.NET.RavenDB.Tests\Audit.NET.RavenDB.Tests.csproj", "{E44C059B-81A0-4785-BA6E-3F04A816394F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audit.Net.RavenDB.Examples", "Audit.Net.RavenDB.Examples\Audit.Net.RavenDB.Examples.csproj", "{FC2891A2-27CD-4BD8-B06A-F7A09B1A8E2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{E44C059B-81A0-4785-BA6E-3F04A816394F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E44C059B-81A0-4785-BA6E-3F04A816394F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E44C059B-81A0-4785-BA6E-3F04A816394F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC2891A2-27CD-4BD8-B06A-F7A09B1A8E2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC2891A2-27CD-4BD8-B06A-F7A09B1A8E2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC2891A2-27CD-4BD8-B06A-F7A09B1A8E2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC2891A2-27CD-4BD8-B06A-F7A09B1A8E2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
