@@ -18,7 +18,7 @@ namespace Audit.NET.RavenDB.ConfigurationApi
         /// <param name="collection">The mongo DB collection name.</param>
         /// <param name="jsonSerializerSettings">The custom JsonSerializerSettings.</param>
         /// <param name="serializeAsBson">Specifies whether the target object and extra fields should be serialized as Bson. Default is Json.</param>
-        public static ICreationPolicyConfigurator UseRavenDB(this IConfigurator configurator, string[] urls, X509Certificate2 certificate, string database = "Audit", JsonSerializerSettings jsonSerializerSettings = null)
+        public static ICreationPolicyConfigurator UseRavenDB(this IConfigurator configurator, string[] urls, X509Certificate2 certificate, string database = "Audit", JsonSerializerSettings? jsonSerializerSettings = null)
         {
             var store = new DocumentStore { Urls = urls, Certificate = certificate, Database = database };
             store.Conventions.Serialization = new NewtonsoftJsonSerializationConventions

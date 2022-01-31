@@ -32,7 +32,7 @@ namespace Audit.NET.RavenDB
 
         }
 
-        public RavenDbDataProvider(IDocumentStore store, string? databaseName, JsonSerializerSettings jsonSerializerSettings)
+        public RavenDbDataProvider(IDocumentStore store, string? databaseName, JsonSerializerSettings? jsonSerializerSettings = null)
         {
             _store = store;
             if (databaseName != null)
