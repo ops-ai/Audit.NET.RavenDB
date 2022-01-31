@@ -21,27 +21,26 @@ namespace Audit.NET.RavenDB
         /// </summary>
         public bool IgnoreElementNames { get; set; } = false;
 
+        public bool StoreDiffOnly { get; set; } = false;
+
 
         /// <summary>
         /// Gets or sets the default JsonSerializerSettings.
         /// </summary>
         public JsonSerializerSettings JsonSerializerSettings { get; set; } = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, Converters = new List<JsonConverter>() { new JavaScriptDateTimeConverter() } };
 
-        public RavenDbDataProvider()
-        {
-
-        }
-
-        public RavenDbDataProvider(IDocumentStore store, string? databaseName, JsonSerializerSettings? jsonSerializerSettings = null)
+        public RavenDbDataProvider(IDocumentStore store, string? databaseName, JsonSerializerSettings? jsonSerializerSettings = null, bool? storeDiffOnly = false)
         {
             _store = store;
             if (databaseName != null)
                 Database = databaseName;
             if (jsonSerializerSettings != null)
                 JsonSerializerSettings = jsonSerializerSettings;
+            if (storeDiffOnly.HasValue)
+                StoreDiffOnly = storeDiffOnly.Value;
         }
 
-        public override object Serialize<T>(T value)
+        public override object? Serialize<T>(T value)
         {
             if (value == null)
                 return null;
@@ -53,6 +52,27 @@ namespace Audit.NET.RavenDB
         {
             using (var session = _store.OpenSession(Database))
             {
+                if (StoreDiffOnly)
+                {
+                    try
+                    {
+                        if (auditEvent.Target?.Old != null && auditEvent.Target?.New != null)
+                        {
+                            var entityType = auditEvent.Target.Old.GetType();
+                            var properies = entityType.GetProperties();
+                            foreach (var property in properies)
+                                if (property.CanWrite && Equals(property.GetValue(auditEvent.Target.Old, null), property.GetValue(auditEvent.Target.New, null)))
+                                {
+                                    property.SetValue(auditEvent.Target.Old, null);
+                                    property.SetValue(auditEvent.Target.New, null);
+                                }
+                        }
+                        else if (auditEvent.Target != null)
+                            auditEvent.Target.Type = auditEvent.Target?.New?.GetType().Name ?? auditEvent.Target?.Old?.GetType().Name ?? "Object";
+                    }
+                    catch { }
+                }
+
                 session.Store(auditEvent);
                 session.SaveChanges();
 
@@ -69,6 +89,27 @@ namespace Audit.NET.RavenDB
         {
             using (var session = _store.OpenAsyncSession(Database))
             {
+                if (StoreDiffOnly)
+                {
+                    try
+                    {
+                        if (auditEvent.Target?.Old != null && auditEvent.Target?.New != null)
+                        {
+                            var entityType = auditEvent.Target.Old.GetType();
+                            var properies = entityType.GetProperties();
+                            foreach (var property in properies)
+                                if (property.CanWrite && Equals(property.GetValue(auditEvent.Target.Old, null), property.GetValue(auditEvent.Target.New, null)))
+                                {
+                                    property.SetValue(auditEvent.Target.Old, null);
+                                    property.SetValue(auditEvent.Target.New, null);
+                                }
+                        }
+                        else if (auditEvent.Target != null)
+                            auditEvent.Target.Type = auditEvent.Target?.New?.GetType().Name ?? auditEvent.Target?.Old?.GetType().Name ?? "Object";
+                    }
+                    catch { }
+                }
+
                 await session.StoreAsync(auditEvent);
                 await session.SaveChangesAsync();
 
