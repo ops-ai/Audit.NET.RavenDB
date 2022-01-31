@@ -1,7 +1,10 @@
 ﻿using Audit.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using ObjectsComparer;
 using Raven.Client.Documents;
+using System.Collections;
+using System.Linq;
 
 namespace Audit.NET.RavenDB
 {
@@ -63,8 +66,8 @@ namespace Audit.NET.RavenDB
                             foreach (var property in properies)
                                 if (property.CanWrite && Equals(property.GetValue(auditEvent.Target.Old, null), property.GetValue(auditEvent.Target.New, null)))
                                 {
-                                    property.SetValue(auditEvent.Target.Old, null);
-                                    property.SetValue(auditEvent.Target.New, null);
+                                    property.SetValue(auditEvent.Target.Old, default);
+                                    property.SetValue(auditEvent.Target.New, default);
                                 }
                         }
                         else if (auditEvent.Target != null)
@@ -100,8 +103,8 @@ namespace Audit.NET.RavenDB
                             foreach (var property in properies)
                                 if (property.CanWrite && Equals(property.GetValue(auditEvent.Target.Old, null), property.GetValue(auditEvent.Target.New, null)))
                                 {
-                                    property.SetValue(auditEvent.Target.Old, null);
-                                    property.SetValue(auditEvent.Target.New, null);
+                                    property.SetValue(auditEvent.Target.Old, default);
+                                    property.SetValue(auditEvent.Target.New, default);
                                 }
                         }
                         else if (auditEvent.Target != null)
