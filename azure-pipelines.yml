@@ -7,7 +7,7 @@ trigger:
 - develop
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'windows-2022'
 
 variables:
   solution: '**/*.sln'
@@ -19,18 +19,16 @@ steps:
   inputs:
     versionSpec: 
     checkLatest: true
-
-- task: GitVersion@5
+    
+- task: gitversion/setup@0
   inputs:
-    runtime: 'core'
+    versionSpec: '5.x'
+    
+- task: gitversion/execute@0
+  inputs:
     updateAssemblyInfo: true
-    updateAssemblyInfoFilename: 'AssemblyInfo.cs'
+    updateAssemblyInfoFilename: '$(Build.SourcesDirectory)\AssemblyInfo.cs'
     additionalArguments: '/output buildserver'
-
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '5.0.100'
 
 - task: SonarCloudPrepare@1
   inputs:
@@ -84,3 +82,8 @@ steps:
   inputs:
     pollingTimeoutSec: '300'
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

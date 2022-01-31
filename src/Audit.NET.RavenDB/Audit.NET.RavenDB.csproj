@@ -6,7 +6,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>opsAI</Authors>
     <RepositoryUrl>https://github.com/ops-ai/Audit.NET.RavenDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
