@@ -7,7 +7,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Version>1.3.1</Version>
+    <Version>1.5.0</Version>
     <Authors>opsAI</Authors>
     <RepositoryUrl>https://github.com/ops-ai/Audit.NET.RavenDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Audit.NET" Version="19.0.5" />
-    <PackageReference Include="RavenDB.Client" Version="5.3.2" />
+    <PackageReference Include="RavenDB.Client" Version="5.3.100" />
   </ItemGroup>
 
   <ItemGroup>

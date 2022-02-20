@@ -10,32 +10,37 @@ namespace Audit.NET.RavenDB.ConfigurationApi
     public static class RavenDbConfiguratorExtensions
     {
         /// <summary>
-        /// Store the events in a MongoDB database.
+        /// Store the events in a RavenDB database.
         /// </summary>
         /// <param name="configurator">The Audit.NET Configurator</param>
-        /// <param name="connectionString">The mongo DB connection string.</param>
-        /// <param name="database">The mongo DB database name.</param>
-        /// <param name="collection">The mongo DB collection name.</param>
+        /// <param name="connectionString">The RavenDB connection string.</param>
+        /// <param name="database">The RavenDB database name.</param>
+        /// <param name="collection">The RavenDB collection name.</param>
         /// <param name="jsonSerializerSettings">The custom JsonSerializerSettings.</param>
-        /// <param name="serializeAsBson">Specifies whether the target object and extra fields should be serialized as Bson. Default is Json.</param>
-        public static ICreationPolicyConfigurator UseRavenDB(this IConfigurator configurator, string[] urls, X509Certificate2 certificate, string database = "Audit", JsonSerializerSettings? jsonSerializerSettings = null)
+        public static ICreationPolicyConfigurator UseRavenDB(this IConfigurator configurator, string[] urls, X509Certificate2 certificate, string database = "Audit", JsonSerializerSettings? jsonSerializerSettings = null, bool? storeDiffOnly = true)
         {
             var store = new DocumentStore { Urls = urls, Certificate = certificate, Database = database };
-            store.Conventions.Serialization = new NewtonsoftJsonSerializationConventions
+            var serializer = new NewtonsoftJsonSerializationConventions
             {
                 JsonContractResolver = new AuditContractResolver()
             };
+            serializer.CustomizeJsonSerializer += (JsonSerializer serializer) =>
+            {
+                serializer.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
+                serializer.NullValueHandling = NullValueHandling.Ignore;
+            };
+            store.Conventions.Serialization = serializer;
             store.Initialize();
 
-            var ravendbDataProvider = new RavenDbDataProvider(store, database, jsonSerializerSettings);
+            var ravendbDataProvider = new RavenDbDataProvider(store, database, jsonSerializerSettings, storeDiffOnly);
             return configurator.UseCustomProvider(ravendbDataProvider);
         }
 
         /// <summary>
-        /// Store the events in a MongoDB database.
+        /// Store the events in a RavenDB database.
         /// </summary>
         /// <param name="configurator">The Audit.NET Configurator</param>
-        /// <param name="config">The mongo DB provider configuration.</param>
+        /// <param name="config">The RavenDB provider configuration.</param>
         public static ICreationPolicyConfigurator UseRavenDB(this IConfigurator configurator, Action<IRavenDbProviderConfigurator> config)
         {
             var ravenDbConfig = new RavenDbProviderConfigurator();

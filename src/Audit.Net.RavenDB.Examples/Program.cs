@@ -11,13 +11,14 @@ builder.Services.AddRavenDb(builder.Configuration.GetSection("Raven"));
 
 builder.Services.AddOptions();
 
-Audit.Core.Configuration.Setup()
-    .UseRavenDB(builder.Configuration.GetSection("Raven:Urls").Get<string[]>(), ServiceRegistrationExtensions.GetRavenDbCertificate(), builder.Configuration["Raven:DatabaseName"]);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+Configuration.Setup()
+    .UseRavenDB(builder.Configuration.GetSection("Raven:Urls").Get<string[]>(), ServiceRegistrationExtensions.GetRavenDbCertificate(), builder.Configuration["Raven:DatabaseName"]);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

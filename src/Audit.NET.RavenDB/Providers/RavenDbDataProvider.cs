@@ -1,14 +1,12 @@
 ﻿using Audit.Core;
+using Audit.NET.RavenDB.Providers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ObjectsComparer;
 using Raven.Client.Documents;
-using System.Collections;
-using System.Linq;
 
 namespace Audit.NET.RavenDB
 {
-    public class RavenDbDataProvider : AuditDataProvider
+    public class RavenDbDataProvider : AuditDataProvider, IAuditQueryProvider
     {
         private readonly IDocumentStore _store;
 
@@ -25,7 +23,6 @@ namespace Audit.NET.RavenDB
         public bool IgnoreElementNames { get; set; } = false;
 
         public bool StoreDiffOnly { get; set; } = false;
-
 
         /// <summary>
         /// Gets or sets the default JsonSerializerSettings.
@@ -130,7 +127,8 @@ namespace Audit.NET.RavenDB
         {
             using (var session = _store.OpenSession())
             {
-                return session.Load<T>(eventId.ToString());
+                var auditEvent = session.Load<T>(eventId.ToString());
+                return (T)auditEvent;
             }
         }
 
@@ -145,7 +143,8 @@ namespace Audit.NET.RavenDB
         {
             using (var session = _store.OpenAsyncSession())
             {
-                return await session.LoadAsync<T>(eventId.ToString());
+                var auditEvent = await session.LoadAsync<T>(eventId.ToString());
+                return (T)auditEvent;
             }
         }
 
@@ -177,6 +176,32 @@ namespace Audit.NET.RavenDB
             {
                 await session.StoreAsync(auditEvent, eventId.ToString());
                 await session.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<AuditEvent>> GetAuditEventsAsync(object id, string eventType, CancellationToken ct = default)
+        {
+            using (var session = _store.OpenAsyncSession())
+            {
+                return await session.Advanced.AsyncDocumentQuery<AuditEvent>()
+                            .OpenSubclause()
+                                .WhereEquals("Id", id)
+                                .OrElse().WhereEquals("CustomFields.Id", id)
+                            .CloseSubclause()
+                            .AndAlso().WhereStartsWith("EventType", eventType).ToListAsync(ct);
+            }
+        }
+
+        public List<AuditEvent> GetAuditEvents(object id, string eventType)
+        {
+            using (var session = _store.OpenSession())
+            {
+                return session.Advanced.DocumentQuery<AuditEvent>()
+                            .OpenSubclause()
+                                .WhereEquals("Id", id)
+                                .OrElse().WhereEquals("CustomFields.Id", id)
+                            .CloseSubclause()
+                            .AndAlso().WhereStartsWith("EventType", eventType).ToList();
             }
         }
     }
