@@ -5,10 +5,10 @@ namespace Audit.NET.RavenDB.ConfigurationApi
 {
     public class RavenDbProviderConfigurator : IRavenDbProviderConfigurator
     {
-        internal string[] _urls = null;
+        internal string[]? _urls = null;
         internal string _database = "Audit";
-        internal X509Certificate2 _certificate;
-        internal JsonSerializerSettings _jsonSerializerSettings = null;
+        internal X509Certificate2? _certificate;
+        internal JsonSerializerSettings? _jsonSerializerSettings = null;
 
         public IRavenDbProviderConfigurator Urls(string[] urls)
         {

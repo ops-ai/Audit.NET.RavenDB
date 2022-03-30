@@ -17,7 +17,7 @@ namespace Audit.NET.RavenDB.ConfigurationApi
         /// <param name="database">The RavenDB database name.</param>
         /// <param name="collection">The RavenDB collection name.</param>
         /// <param name="jsonSerializerSettings">The custom JsonSerializerSettings.</param>
-        public static ICreationPolicyConfigurator UseRavenDB(this IConfigurator configurator, string[] urls, X509Certificate2 certificate, string database = "Audit", JsonSerializerSettings? jsonSerializerSettings = null, bool? storeDiffOnly = true)
+        public static ICreationPolicyConfigurator UseRavenDB(this IConfigurator configurator, string[] urls, X509Certificate2? certificate, string database = "Audit", JsonSerializerSettings? jsonSerializerSettings = null, bool? storeDiffOnly = true)
         {
             var store = new DocumentStore { Urls = urls, Certificate = certificate, Database = database };
             var serializer = new NewtonsoftJsonSerializationConventions
@@ -45,7 +45,7 @@ namespace Audit.NET.RavenDB.ConfigurationApi
         {
             var ravenDbConfig = new RavenDbProviderConfigurator();
             config.Invoke(ravenDbConfig);
-            return UseRavenDB(configurator, ravenDbConfig._urls, ravenDbConfig._certificate, ravenDbConfig._database, ravenDbConfig._jsonSerializerSettings);
+            return UseRavenDB(configurator, ravenDbConfig._urls!, ravenDbConfig._certificate, ravenDbConfig._database, ravenDbConfig._jsonSerializerSettings);
         }
     }
 }

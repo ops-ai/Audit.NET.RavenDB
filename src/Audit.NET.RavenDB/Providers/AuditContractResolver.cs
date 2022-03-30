@@ -13,7 +13,7 @@ namespace Audit.NET.RavenDB.Providers
         {
             IList<JsonProperty> properties = base.CreateProperties(type, memberSerialization);
 
-            properties = properties.Where(p => !p.AttributeProvider.GetAttributes(true).Any(t => t is System.Text.Json.Serialization.JsonExtensionDataAttribute)).ToList();
+            properties = properties.Where(p => !p.AttributeProvider!.GetAttributes(true).Any(t => t is System.Text.Json.Serialization.JsonExtensionDataAttribute)).ToList();
 
             return properties;
         }
@@ -33,7 +33,7 @@ namespace Audit.NET.RavenDB.Providers
                     foreach (object attr in prop.GetCustomAttributes(true))
                     {
                         if (attr is System.Text.Json.Serialization.JsonExtensionDataAttribute extData)
-                            return ((Dictionary<string, object>)prop.GetValue(o)).ToDictionary(t => (object)t.Key, t => t.Value);
+                            return ((Dictionary<string, object>?)prop.GetValue(o))?.ToDictionary(t => (object)t.Key, t => t.Value);
                     }
                 }
                 return null;
