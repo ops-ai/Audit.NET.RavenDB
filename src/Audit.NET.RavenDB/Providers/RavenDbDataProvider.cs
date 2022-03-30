@@ -1,8 +1,10 @@
 ﻿using Audit.Core;
 using Audit.NET.RavenDB.Providers;
+using Force.DeepCloner;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Raven.Client.Documents;
+using SimpleHelpers;
 
 namespace Audit.NET.RavenDB
 {
@@ -45,7 +47,7 @@ namespace Audit.NET.RavenDB
             if (value == null)
                 return null;
 
-            return JsonConvert.DeserializeObject(JsonConvert.SerializeObject(value, JsonSerializerSettings), value.GetType(), JsonSerializerSettings);
+            return value.DeepClone();// JsonConvert.DeserializeObject(JsonConvert.SerializeObject(value, JsonSerializerSettings), value.GetType(), JsonSerializerSettings);
         }
 
         public override object InsertEvent(AuditEvent auditEvent)
@@ -54,23 +56,13 @@ namespace Audit.NET.RavenDB
             {
                 if (StoreDiffOnly)
                 {
-                    try
+                    if (auditEvent.Target != null)
                     {
-                        if (auditEvent.Target?.Old != null && auditEvent.Target?.New != null)
-                        {
-                            var entityType = auditEvent.Target.Old.GetType();
-                            var properies = entityType.GetProperties();
-                            foreach (var property in properies)
-                                if (property.CanWrite && Equals(property.GetValue(auditEvent.Target.Old, null), property.GetValue(auditEvent.Target.New, null)))
-                                {
-                                    property.SetValue(auditEvent.Target.Old, default);
-                                    property.SetValue(auditEvent.Target.New, default);
-                                }
-                        }
-                        else if (auditEvent.Target != null)
-                            auditEvent.Target.Type = auditEvent.Target?.New?.GetType().Name ?? auditEvent.Target?.Old?.GetType().Name ?? "Object";
+                        var diff = ObjectDiffPatch.GenerateDiff(auditEvent.Target.Old, auditEvent.Target.New);
+
+                        auditEvent.Target.Old = diff.OldValues;
+                        auditEvent.Target.New = diff.NewValues;
                     }
-                    catch { }
                 }
 
                 session.Store(auditEvent);
@@ -93,19 +85,13 @@ namespace Audit.NET.RavenDB
                 {
                     try
                     {
-                        if (auditEvent.Target?.Old != null && auditEvent.Target?.New != null)
+                        if (auditEvent.Target != null)
                         {
-                            var entityType = auditEvent.Target.Old.GetType();
-                            var properies = entityType.GetProperties();
-                            foreach (var property in properies)
-                                if (property.CanWrite && Equals(property.GetValue(auditEvent.Target.Old, null), property.GetValue(auditEvent.Target.New, null)))
-                                {
-                                    property.SetValue(auditEvent.Target.Old, default);
-                                    property.SetValue(auditEvent.Target.New, default);
-                                }
+                            var diff = ObjectDiffPatch.GenerateDiff(auditEvent.Target.Old, auditEvent.Target.New);
+
+                            auditEvent.Target.Old = diff.OldValues;
+                            auditEvent.Target.New = diff.NewValues;
                         }
-                        else if (auditEvent.Target != null)
-                            auditEvent.Target.Type = auditEvent.Target?.New?.GetType().Name ?? auditEvent.Target?.Old?.GetType().Name ?? "Object";
                     }
                     catch { }
                 }
