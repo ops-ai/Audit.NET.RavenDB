@@ -1,36 +1,55 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Version>1.6.0</Version>
-    <Authors>opsAI</Authors>
-    <RepositoryUrl>https://github.com/ops-ai/Audit.NET.RavenDB</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+		<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<Version>1.6.1</Version>
+		<Authors>opsAI</Authors>
+		<RepositoryUrl>https://github.com/ops-ai/Audit.NET.RavenDB</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://github.com/ops-ai/Audit.NET.RavenDB</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageDescription>Store Audit.NET Trail Logs into a RavenDB document store</PackageDescription>
+		<PackageTags>feature management;toggly;feature flags;dark release;feature flag management; blue green deployment;canary deployment</PackageTags>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\AssemblyInfo.cs" Link="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\..\AssemblyInfo.cs" Link="Properties\AssemblyInfo.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Audit.NET" Version="19.0.5" />
-    <PackageReference Include="DeepCloner" Version="0.10.3" />
-    <PackageReference Include="RavenDB.Client" Version="5.3.100" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Audit.NET" Version="19.0.5" Exclude="Build,Analyzers" />
+		<PackageReference Include="DeepCloner" Version="0.10.3" />
+		<PackageReference Include="RavenDB.Client" Version="5.*" Exclude="Build,Analyzers" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\..\LICENSE" Pack="true" PackagePath="LICENSE" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\LICENSE" Pack="true" PackagePath="LICENSE" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
 </Project>
