@@ -1,9 +1,10 @@
 ﻿using Audit.Core;
 using Audit.Net.RavenDB.Examples.Data;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Raven.Client.Documents;
 using System.Text.Json.Serialization;
+using Toggly.Web.Data;
+using Toggly.Web.Data.Filters;
 
 namespace Audit.Net.RavenDB.Examples.Pages
 {

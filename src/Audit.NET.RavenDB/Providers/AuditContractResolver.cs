@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System;
 namespace Audit.NET.RavenDB.Providers
 {
     public class AuditContractResolver : DefaultContractResolver
@@ -15,7 +14,7 @@ namespace Audit.NET.RavenDB.Providers
             IList<JsonProperty> properties = base.CreateProperties(type, memberSerialization);
 
             properties = properties.Where(p => !p.AttributeProvider.GetAttributes(true).Any(t => t is System.Text.Json.Serialization.JsonExtensionDataAttribute)).ToList();
-            
+
             return properties;
         }
 

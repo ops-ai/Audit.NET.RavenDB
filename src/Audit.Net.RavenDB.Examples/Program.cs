@@ -1,7 +1,7 @@
 using Audit.Core;
 using Audit.Net.RavenDB.Examples;
-using Azure.Identity;
 using Audit.NET.RavenDB.ConfigurationApi;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

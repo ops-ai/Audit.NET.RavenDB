@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using Raven.Client.Documents;
 using Raven.Client.Json.Serialization.NewtonsoftJson;
 using Raven.TestDriver;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -20,7 +19,7 @@ namespace Audit.NET.RavenDB.Tests
         {
             _output = output;
             _store = GetDocumentStore();
-            
+
         }
 
         protected override void PreInitialize(IDocumentStore documentStore)
