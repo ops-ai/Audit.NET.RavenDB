@@ -381,7 +381,7 @@ namespace SimpleHelpers
                         array.Clear();
                         for (int i = 0; i < sz; i++)
                         {
-                            array.Add(i < snapshot!.Count ? snapshot[i] : null);
+                            array.Add((object?)(i < snapshot!.Count ? snapshot[i] : null));
                         }
                     }
                     // patch it
@@ -389,7 +389,7 @@ namespace SimpleHelpers
                     {
                         if (int.TryParse(f.Key, out var ix))
                         {
-                            array[ix] = Patch(array[ix], f.Value);
+                            array![ix] = Patch(array[ix], f.Value)!;
                         }
                     }
                 }
