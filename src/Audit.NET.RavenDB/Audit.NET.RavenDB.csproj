@@ -7,7 +7,7 @@
 		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<Version>1.6.1</Version>
+		<Version>1.6.2</Version>
 		<Authors>opsAI</Authors>
 		<RepositoryUrl>https://github.com/ops-ai/Audit.NET.RavenDB</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
@@ -18,7 +18,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageDescription>Store Audit.NET Trail Logs into a RavenDB document store</PackageDescription>
-		<PackageTags>feature management;toggly;feature flags;dark release;feature flag management; blue green deployment;canary deployment</PackageTags>
+		<PackageTags>audit.net;audit;audit trails;ravendb</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
