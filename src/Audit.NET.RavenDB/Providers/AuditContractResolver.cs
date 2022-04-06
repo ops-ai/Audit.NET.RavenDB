@@ -41,27 +41,24 @@ namespace Audit.NET.RavenDB.Providers
 
             contract.ExtensionDataSetter = (o, key, value) =>
             {
-                var props = o.GetType().GetProperties();
-                foreach (var prop in props)
+                var extensionProp = objectType.GetProperties().FirstOrDefault(prop =>
+                    prop.GetCustomAttributes(true).Any(attr => attr is System.Text.Json.Serialization.JsonExtensionDataAttribute extData));
+
+                if (extensionProp == null || key.StartsWith('@'))
+                    return;
+
+                if (extensionProp.PropertyType == typeof(Dictionary<string, object>))
                 {
-                    object[] attrs = prop.GetCustomAttributes(true);
-                    foreach (object attr in attrs)
-                    {
-                        if (attr is System.Text.Json.Serialization.JsonExtensionDataAttribute extData)
-                        {
-                            if (value == null || value.GetType() == prop.PropertyType)
-                                prop.SetValue(o, value);
-                            else
-                            {
-                                var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings { ContractResolver = this });
-                                prop.SetValue(o, Newtonsoft.Json.Linq.JToken.FromObject(value, serializer).ToObject(prop.PropertyType, serializer));
-                            }
-                        }
-                    }
+                    if (extensionProp.GetValue(o) is not Dictionary<string, object> currentValue)
+                        currentValue = new();
+                    currentValue.Add(key, value!);
+                    extensionProp.SetValue(o, currentValue);
                 }
             };
 
-            contract.ExtensionDataValueType = typeof(object);
+            var extensionProp = objectType.GetProperties().FirstOrDefault(prop =>
+                prop.GetCustomAttributes(true).Any(attr => attr is System.Text.Json.Serialization.JsonExtensionDataAttribute extData));
+            contract.ExtensionDataValueType = extensionProp?.PropertyType;
 
             return contract;
         }

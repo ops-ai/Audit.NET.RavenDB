@@ -45,6 +45,8 @@ namespace Audit.NET.RavenDB.Tests
 
             using (var scope = await AuditScope.CreateAsync(new AuditScopeOptions() { EventType = "test" }))
             {
+                scope.SetCustomField("Test", "test");
+                scope.SetCustomField("Test2", "test2");
             }
 
             using (var session = _store.OpenAsyncSession())
