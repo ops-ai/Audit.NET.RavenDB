@@ -1,5 +1,8 @@
 # Audit.NET.RavenDB
 
+Audit.NET.RavenDB is now part of the Audit.NET repository and can be found here https://github.com/thepirat000/Audit.NET/tree/master/src/Audit.NET.RavenDB
+
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ops-ai_audit-net-ravendb&metric=alert_status)](https://sonarcloud.io/dashboard?id=ops-ai_audit-net-ravendb)
 [![Build Status](https://opsai.visualstudio.com/BeyondAuth/_apis/build/status/ops-ai.Audit.NET.RavenDB?branchName=develop)](https://opsai.visualstudio.com/BeyondAuth/_build/latest?definitionId=7&branchName=develop)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=ops-ai_audit-net-ravendb&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=ops-ai_audit-net-ravendb)
